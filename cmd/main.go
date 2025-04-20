@@ -4,7 +4,7 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/KenB773/cybersec-rpg/internal"
+	"github.com/KenB773/CybeRPG/internal"
 )
 
 func main() {
