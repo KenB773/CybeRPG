@@ -10,7 +10,7 @@ import (
 func ShowLogo() {
 	file, err := os.Open("assets/logo.txt")
 	if err != nil {
-		fmt.Println("Welcome to the Cybersecurity Training RPG!")
+		fmt.Println("Welcome to CybeRPG!")
 		return
 	}
 	defer file.Close()
