@@ -91,7 +91,7 @@ Choose a category to focus on or press Enter for all:")
 
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(selected), func(i, j int) { selected[i], selected[j] = selected[j], selected[i] })
-	rand.Shuffle(len(Questions), func(i, j int) { Questions[i], Questions[j] = Questions[j], Questions[i] })
+	
 
 	for i, q := range selected {
 		fmt.Printf("[%d/%d] %s\n%s\n> ", i+1, len(Questions), q.Category, q.Prompt)
