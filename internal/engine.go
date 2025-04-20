@@ -169,16 +169,12 @@ func StartGame() {
 	}
 
 	categories := getUniqueCategories(Questions)
-	fmt.Println("
-Choose a category to focus on or press Enter for all:")
+	fmt.Println("Choose a category to focus on or press Enter for all:")
 	for _, c := range categories {
-		fmt.Printf("- %s
-", c)
+		fmt.Printf("- %s", c)
 	}
-	fmt.Print("
-> ")
-	catChoice, _ := reader.ReadString('
-')
+	fmt.Print("> ")
+	catChoice, _ := reader.ReadString('')
 	catChoice = strings.TrimSpace(catChoice)
 
 	var selected []Question
