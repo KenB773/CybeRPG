@@ -2,13 +2,8 @@
 package internal
 
 import (
-	"bufio"
-	"encoding/json"
-	"fmt"
-	"math/rand"
-	"os"
-	"strings"
-	"time"
+$1
+	"github.com/agnivade/levenshtein"
 )
 
 const levelThreshold = 30
@@ -131,6 +126,33 @@ var Questions = []Question{
 {Category: "General", Prompt: "What is threat modeling?", Answer: "Identifying risks to systems"}
 }
 
+func normalize(s string) string {
+	s = strings.ToLower(s)
+	s = strings.ReplaceAll(s, "-", " ")
+	s = strings.ReplaceAll(s, "_", " ")
+	s = strings.ReplaceAll(s, ".", "")
+	s = strings.ReplaceAll(s, ",", "")
+	s = strings.ReplaceAll(s, "&", "and")
+	s = strings.TrimSpace(s)
+	s = strings.Join(strings.Fields(s), " ")
+	return s
+}
+
+func answersMatch(input, correct string) bool {
+	input = normalize(input)
+	correct = normalize(correct)
+	if answersMatch(input, correct) {
+			if normalize(input) != normalize(q.Answer) {
+				fmt.Println("✅ Close enough! We'll count that as correct.")
+			} else {
+		return true
+	}
+	if levenshtein.ComputeDistance(input, correct) <= 2 {
+		return true
+	}
+	return false
+}
+
 func StartGame() {
 	if len(os.Args) > 1 && os.Args[1] == "--achievements" {
 		player := loadPlayerProgress()
@@ -188,8 +210,8 @@ Choose a category to focus on or press Enter for all:")
 	for i, q := range selected {
 		fmt.Printf("[%d/%d] %s\n%s\n> ", i+1, len(Questions), q.Category, q.Prompt)
 		input, _ := reader.ReadString('\n')
-		input = strings.TrimSpace(strings.ToLower(input))
-		correct := strings.ToLower(q.Answer)
+		input = normalize(input)
+		correct := normalize(q.Answer)
 
 		if input == correct {
 			fmt.Println("✅ Correct! +10 XP")
@@ -208,10 +230,14 @@ Choose a category to focus on or press Enter for all:")
 			fmt.Println(bossFightIntro)
 			fmt.Printf("%s\n> ", boss.Prompt)
 			bossInput, _ := reader.ReadString('\n')
-			bossInput = strings.TrimSpace(strings.ToLower(bossInput))
-			bossAnswer := strings.ToLower(boss.Answer)
-			if bossInput == bossAnswer {
+			bossInput = normalize(bossInput)
+			bossAnswer := normalize(boss.Answer)
+			if answersMatch(bossInput, bossAnswer) {
+				if normalize(bossInput) != normalize(boss.Answer) {
+					fmt.Println("🎉 Boss defeated with a near-match! +20 XP")
+				} else {
 				fmt.Println("🎉 Boss defeated! +20 XP")
+				}
 				player.XP["Boss"] += 20
 			} else {
 				fmt.Printf("💀 You failed the boss. Correct answer: %s\n", boss.Answer)
