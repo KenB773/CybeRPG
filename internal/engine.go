@@ -2,6 +2,14 @@
 package internal
 
 import (
+	"bufio"
+	"encoding/json"
+	"fmt"
+	"math/rand"
+	"os"
+	"strings"
+	"time"
+	
 	"github.com/agnivade/levenshtein"
 )
 
@@ -25,6 +33,33 @@ type Question struct {
 	Category string
 	Prompt   string
 	Answer   string
+}
+
+// normalize input for lenient matching
+func normalize(s string) string {
+	s = strings.ToLower(s)
+	s = strings.ReplaceAll(s, "-", " ")
+	s = strings.ReplaceAll(s, "_", " ")
+	s = strings.ReplaceAll(s, ".", "")
+	s = strings.ReplaceAll(s, ",", "")
+	s = strings.ReplaceAll(s, "&", "and")
+	s = strings.TrimSpace(s)
+	s = strings.Join(strings.Fields(s), " ") // collapse multiple spaces
+	return s
+}
+
+// allow typo forgiveness using Levenshtein distance
+func answersMatch(input, correct string) bool {
+	input = normalize(input)
+	correct = normalize(correct)
+
+	if input == correct {
+		return true
+	}
+	if levenshtein.ComputeDistance(input, correct) <= 2 {
+		return true
+	}
+	return false
 }
 
 var Questions = []Question{
@@ -112,38 +147,11 @@ var Questions = []Question{
 	{Category: "General", Prompt: "MITRE is an Acronym for Malicious Intrusion Training & Response Experts, true or false?", Answer: "False"},
 	{Category: "General", Prompt: "What is zero trust? Format hint: _____ _____, ______ ______", Answer: "Never trust, always verify"},
 }
-
-func normalize(s string) string {
-	s = strings.ToLower(s)
-	s = strings.ReplaceAll(s, "-", " ")
-	s = strings.ReplaceAll(s, "_", " ")
-	s = strings.ReplaceAll(s, ".", "")
-	s = strings.ReplaceAll(s, ",", "")
-	s = strings.ReplaceAll(s, "&", "and")
-	s = strings.TrimSpace(s)
-	s = strings.Join(strings.Fields(s), " ")
-	return s
-}
-
-func answersMatch(input, correct string) bool {
-	input = normalize(input)
-	correct = normalize(correct)
-
-	if input == correct {
-		return true
-	}
-	if levenshtein.ComputeDistance(input, correct) <= 2 {
-		return true
-	}
-	return false
-}
-
+	
 func StartGame() {
 	if len(os.Args) > 1 && os.Args[1] == "--achievements" {
 		player := loadPlayerProgress()
-		fmt.Printf("
-📜 Achievements for %s:
-", player.Name)
+		fmt.Printf("📜 Achievements for %s:", player.Name)
 		printAchievements(player)
 		return
 	}
@@ -153,7 +161,7 @@ func StartGame() {
 		player.XP = make(map[string]int)
 	}
 
-	fmt.Println("Welcome to the Cybersecurity Training RPG!")
+	fmt.Println("Welcome to CybeRPG!")
 	if player.Name == "Analyst" {
 		fmt.Print("Enter your name: ")
 		name, _ := reader.ReadString('\n')
