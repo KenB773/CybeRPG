@@ -1,0 +1,9 @@
+{
+  "player": {
+    "name": "AnalystOne",
+    "xp": {
+      "OSINT": 20,
+      "Incident Response": 10
+    }
+  }
+}
