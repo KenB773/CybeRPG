@@ -141,10 +141,8 @@ func normalize(s string) string {
 func answersMatch(input, correct string) bool {
 	input = normalize(input)
 	correct = normalize(correct)
-	if answersMatch(input, correct) {
-			if normalize(input) != normalize(q.Answer) {
-				fmt.Println("✅ Close enough! We'll count that as correct.")
-			} else {
+
+	if input == correct {
 		return true
 	}
 	if levenshtein.ComputeDistance(input, correct) <= 2 {
