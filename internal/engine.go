@@ -2,7 +2,6 @@
 package internal
 
 import (
-$1
 	"github.com/agnivade/levenshtein"
 )
 
