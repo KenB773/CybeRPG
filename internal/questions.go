@@ -1,5 +1,5 @@
 // Question bank storage - I'm not a pro dev and it was simpler to just keep everything in Engine.go - but this can be used for question sets in the future.
-// package internal
+package internal
 
 // Placeholder for question bank
 // var Questions = []Question{
