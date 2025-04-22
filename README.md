@@ -46,15 +46,15 @@ go run ./cmd
 
 ```bash
 cybersec-rpg/
-├── assets/             # Optional: ASCII banner or future extensions
+├── assets/             
 │   └── logo.txt        
-├── cmd/                # Entrypoint: main.go
-├── internal/           # Game engine, questions, player tracking
+├── cmd/                
+├── internal/           # Game engine, questions, player tracking - all in engine for now, others are unused
 │   └── engine.go
 ├── examples/           # Save game data (JSON)
 │   └── save.json       
 ├── go.mod / go.sum     # Module definitions
-└── README.md           # You're here!
+└── README.md           # This is you 📍
 ```
 
 ---
