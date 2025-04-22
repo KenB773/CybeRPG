@@ -59,11 +59,11 @@ cybersec-rpg/
 
 ---
 
-## ✍Built With
+## Built With
 
 - [Go](https://golang.org/) — Fast and portable backend
 - [Levenshtein](https://github.com/agnivade/levenshtein) — Forgiving answer matching
-- 🧠 Your brain — For leveling up in real life
+- Our collective brains 🧠 — For leveling up in real life!
 
 ---
 
@@ -86,7 +86,7 @@ cybersec-rpg/
 
 ## Why This Project?
 
-This game was created as both a learning tool and a portfolio project — something fun, functional, and practical. Whether you’re a SOC analyst, red team hopeful, or just studying for your next cert, CybeRPG helps keep your reflexes sharp in a gamified way.
+This game was created as both a learning tool and a portfolio project — something fun, functional, and practical. Whether you’re a SOC analyst, red team hopeful, studying for your next cert, or just admiring my overwhelming dedication to the Oxford comma, CybeRPG helps keep your reflexes sharp in a gamified way.
 
 ---
 
